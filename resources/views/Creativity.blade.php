@@ -60,10 +60,10 @@
     <li class="nav-item ">
         <a class="nav-link" href="/qualitative">Qualitative Analysis <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item ">
         <a class="nav-link" href="/comprehension">Comprehension</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="#">Creativity test</a>
       </li>
       <li class="nav-item">
@@ -77,20 +77,22 @@
   <div class="content">
       <div class="fieldsContainer">
       @foreach($users1 as $user1)
-        <div class="card1">{{$user1->qid}}</div>
+         <div class="card1"><a href="#">{{$user1->qid}}</a></div>
       @endforeach
       </div>
+
+
     <div class="section2">
     @foreach ($users1 as $user1)
     <div class="card">
-  <div class="card-header" style="display:inline-block;">
+  <div class="card-header" style="display:inline-block;"><a name="{{$user->qid}}">
   <p class="card-text" style="float:left;"><b>{{ $user1->qid }}</b>&nbsp;&nbsp;
   @if($user1->question)
             {{ $user1->question }}<br><br>
       @endif
       @if($user1->questionimg)
       <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->questionimg))}}">
-      @endif</p>
+      @endif</p></a>
       <p style="float:right;">({{ $user1->marks}})</p>
   </div>
   <div class="card-body">
