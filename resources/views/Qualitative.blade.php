@@ -7,6 +7,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="{{asset('js')}}/event.js"></script>
+  <script src="{{asset('css')}}/style.css"></script>
   <style>
  html,body,
 .wrapper{
@@ -47,10 +50,31 @@
   padding: 10px;
   background: #ddd;
 }
-  </style>
+:target {
+  border: 2px solid #D4D4D4;
+  background-color: #e5eecc;
+}
+
+@media (max-width: 900px) {
+    .fieldsContainer{
+      display: grid;
+      grid-template-columns: 1fr;
+    grid-auto-rows: 50px;
+  overflow-y:scroll;/*added*/
+
+    }
+    .content{
+  display: grid;
+  grid-template-columns:0.25fr 1fr;
+  overflow-y:auto;
+}
+}
+
+</style>
+  
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -77,14 +101,15 @@
   <div class="content">
       <div class="fieldsContainer">
       @foreach($users as $user)
-        <div class="card1">{{$user->qid}}</div>
+      <a href="#{{$user->qid}}"><div class="card1" id="card{{$user->qid}}">{{$user->qid}}</div></a>
       @endforeach
       </div>
     <div class="section2">
     @foreach ($users as $user)
     <div class="card">
-  <div class="card-header" style="display:inline-block;">
-  <p class="card-text" style="float:left;"><b>{{ $user->qid }}</b>&nbsp;&nbsp;
+   
+  <div class="card-header" style="display:inline-block;" id="{{$user->qid}}">
+  <p class="card-text" style="float:left;" ><b> {{ $user->qid }}</b>&nbsp;&nbsp;
   @if($user->question)
             {{ $user->question }}
       @endif
@@ -96,7 +121,7 @@
   <div class="card-body">
 
     <p class="card-text" > 
-    <input type="radio" name="options" value="option1">   @if($user->option1img)
+    <input type="radio" name="radio{{$user->qid}}" class="{{$user->qid}}" value="option1">   @if($user->option1img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option1img))}}">
       @endif
       @if($user->option1)
@@ -104,7 +129,7 @@
       @endif</input>
    </p>
       <p class="card-text"> 
-      <input type="radio" name="options" value="option2">
+      <input type="radio" name="radio{{$user->qid}}" value="option2" class="{{$user->qid}}">
      @if($user->option2img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option2img))}}">
       @endif
@@ -113,7 +138,7 @@
       @endif</p>
 
       <p class="card-text">
-      <input type="radio" name="options" value="option3"> 
+      <input type="radio" name="radio{{$user->qid}}" value="option3" class="{{$user->qid}}"> 
      @if($user->option3img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option3img))}}">
       @endif
@@ -122,7 +147,7 @@
       @endif</p>
 
       <p class="card-text"> 
-      <input type="radio" name="options" value="option4">
+      <input type="radio" name="radio{{$user->qid}}" value="option4" class="{{$user->qid}}">
      @if($user->option4img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option4img))}}">
       @endif
@@ -138,5 +163,18 @@
 
   </div>
 </div>
+<script>
+$(".card1").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#{{$user->qid}}").offset().top-10000
+    }, 2000);
+});
+$(".card-text > input[type=radio]").click(function(){
+  var myClass=$(this).attr("class");
+  $('input[type=radio]').each(function(){
+    $('#card'+myClass).css('background-color', '#ABEBC6');
+  });
+});
+</script>
 </body>
 </html>

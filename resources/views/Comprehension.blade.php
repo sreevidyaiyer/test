@@ -39,6 +39,12 @@
   overflow-y:scroll;/*added*/
 }
 
+
+:target {
+  border: 2px solid #D4D4D4;
+  background-color: #e5eecc;
+}
+
 .section2{
     overflow-y:scroll;
 }
@@ -76,7 +82,7 @@
   <div class="content">
       <div class="fieldsContainer">
       @foreach($users3 as $user3)
-        <div class="card1">{{$user3->qid}}</div>
+      <a href="#{{$user3->qid}}"><div class="card1" id="card{{$user3->qid}}">{{$user3->qid}}</div></a>
       @endforeach
       </div>
     <div class="section2">
@@ -88,7 +94,7 @@
             {{ $user3->para }}<br><br>
   </div>
   @endif
-  <div class="card-header" style="display:inline-block;">
+  <div class="card-header" style="display:inline-block;" id="{{$user3->qid}}">
   <p class="card-text" style="float:left;"><b>{{ $user3->qid }}</b>&nbsp;&nbsp;
   @if($user3->question)
             {{ $user3->question }}
@@ -98,7 +104,7 @@
   <div class="card-body">
 
     <p class="card-text" > 
-    <input type="radio" name="options" value="option1">   @if($user3->option1img)
+    <input type="radio" name="radio{{$user3->qid}}" class="{{$user3->qid}}" value="option1">   @if($user3->option1img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option1img))}}">
       @endif
       @if($user3->option1)
@@ -106,7 +112,7 @@
       @endif</input>
    </p>
       <p class="card-text"> 
-      <input type="radio" name="options" value="option2">
+      <input type="radio" name="radio{{$user3->qid}}" class="{{$user3->qid}}" value="option2">
      @if($user3->option2img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option2img))}}">
       @endif
@@ -115,7 +121,7 @@
       @endif</p>
 
       <p class="card-text">
-      <input type="radio" name="options" value="option3"> 
+      <input type="radio"  name="radio{{$user3->qid}}" class="{{$user3->qid}}" value="option3"> 
      @if($user3->option3img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option3img))}}">
       @endif
@@ -124,7 +130,7 @@
       @endif</p>
 
       <p class="card-text"> 
-      <input type="radio" name="options" value="option4">
+      <input type="radio" name="radio{{$user3->qid}}" class="{{$user3->qid}}" value="option4">
      @if($user3->option4img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option4img))}}">
       @endif
@@ -140,5 +146,18 @@
 
   </div>
 </div>
+<script>
+$(".card1").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#{{$user3->qid}}").offset().top-10000
+    }, 2000);
+});
+$(".card-text > input[type=radio]").click(function(){
+  var myClass=$(this).attr("class");
+  $('input[type=radio]').each(function(){
+    $('#card'+myClass).css('background-color', '#ABEBC6');
+  });
+});
+</script>
 </body>
 </html>
