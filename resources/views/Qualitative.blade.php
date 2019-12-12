@@ -52,7 +52,7 @@
 }
 :target {
   border: 2px solid #D4D4D4;
-  background-color: #e5eecc;
+  background-color: #D5D8DC ;
 }
 
 @media (max-width: 900px) {
@@ -97,7 +97,6 @@
   </div>
 </nav>
 <form name="myForm" method="post" action = "qualitative" >
-
 <div class="wrapper">
   <div class="content">
       <div class="fieldsContainer">
@@ -107,9 +106,9 @@
       </div>
     <div class="section2">
     @foreach ($users as $user)
-    <div class="card">
+    <div class="card" id="{{$user->qid}}">
    
-  <div class="card-header" style="display:inline-block;" id="{{$user->qid}}">
+  <div class="card-header" style="display:inline-block;" >
   <p class="card-text" style="float:left;" ><b></b>&nbsp;&nbsp;
   @if($user->question)
             {{ $user->question }}
@@ -167,7 +166,9 @@
     </div>
 
     <button type="submit" value="submit">Submit</button>
+    <p id="al"></p>
   </div>
+
 </div>
 <script>
 
@@ -177,12 +178,26 @@ var parent= $(".section2");
 var parent1= $(".fieldsContainer");
 var divs=parent.children();
 var divs1=parent1.children();
-while(divs.length){
-  var x=Math.floor(Math.random()*divs.length);
+var a=divs.length-2;
+var arr=[];
+var i=0;
+while(a){
+  a=a-1;
+  var x=Math.floor(Math.random()*a);
   parent.append(divs.splice(x,1)[0]);
- 
-    
-}
+  arr[i]=$(".section2 .card:last").attr('id');
+  $(".section2 .card:last").attr('id',i+1);
+  i++;
+ }
+
+$("#al").html(arr);
+ $(".card1").click(function() {
+  var c=$(this).attr('class')
+
+    $('html,body').animate({
+        scrollTop: $("#{{$user->qid}}").offset().top-10000
+    }, 2000);
+});
 });
 
 $('.card1').each(function(){
@@ -192,14 +207,9 @@ $('.card1').each(function(){
 
 });
 
-$(".card1").click(function() {
-  var c=$(this).attr('class')
-    $('html,body').animate({
-        scrollTop: $("#{{$user->qid}}").offset().top-10000
-    }, 2000);
-});
+
 $(".card-text > input[type=radio]").click(function(){
-  var myClass=$(this).attr("class");
+  var myClass=$(this).parent().parent().parent().attr("id");
   $('input[type=radio]').each(function(){
     $('#card'+myClass).css('background-color', '#ABEBC6');
     });
