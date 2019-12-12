@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/qualitative','QualitativeController@store');
 Route::get('/qualitative','QuestionsController@qualitative');
 Route::get('/comprehension','QuestionsController@comprehension');
 Route::get('/analytical','QuestionsController@analytical');

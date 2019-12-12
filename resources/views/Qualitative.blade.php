@@ -96,12 +96,13 @@
     </ul>
   </div>
 </nav>
-  
+<form name="myForm" method="post" action = "qualitative" >
+
 <div class="wrapper">
   <div class="content">
       <div class="fieldsContainer">
       @foreach($users as $user)
-      <a href="#{{$user->qid}}"><div class="card1" id="card{{$user->qid}}">{{$user->qid}}</div></a>
+      <a href="#{{$user->qid}}"><div class="card1" id="card{{$user->qid}}"></div></a> 
       @endforeach
       </div>
     <div class="section2">
@@ -109,7 +110,7 @@
     <div class="card">
    
   <div class="card-header" style="display:inline-block;" id="{{$user->qid}}">
-  <p class="card-text" style="float:left;" ><b> {{ $user->qid }}</b>&nbsp;&nbsp;
+  <p class="card-text" style="float:left;" ><b></b>&nbsp;&nbsp;
   @if($user->question)
             {{ $user->question }}
       @endif
@@ -121,7 +122,7 @@
   <div class="card-body">
 
     <p class="card-text" > 
-    <input type="radio" name="radio{{$user->qid}}" class="{{$user->qid}}" value="option1">   @if($user->option1img)
+    <input type="radio" name="{{$user->qid}}" class="{{$user->qid}}" value="1">   @if($user->option1img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option1img))}}">
       @endif
       @if($user->option1)
@@ -129,7 +130,7 @@
       @endif</input>
    </p>
       <p class="card-text"> 
-      <input type="radio" name="radio{{$user->qid}}" value="option2" class="{{$user->qid}}">
+      <input type="radio" name="{{$user->qid}}" value="2" class="{{$user->qid}}">
      @if($user->option2img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option2img))}}">
       @endif
@@ -138,7 +139,7 @@
       @endif</p>
 
       <p class="card-text">
-      <input type="radio" name="radio{{$user->qid}}" value="option3" class="{{$user->qid}}"> 
+      <input type="radio" name="{{$user->qid}}" value="3" class="{{$user->qid}}"> 
      @if($user->option3img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option3img))}}">
       @endif
@@ -147,24 +148,52 @@
       @endif</p>
 
       <p class="card-text"> 
-      <input type="radio" name="radio{{$user->qid}}" value="option4" class="{{$user->qid}}">
+      <input type="radio" name="{{$user->qid}}" value="4" class="{{$user->qid}}">
      @if($user->option4img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option4img))}}">
       @endif
       @if($user->option4)
       {{$user->option4}}
       @endif</p>
-     
+   
   </div>
 </div>
+</form>
+
 @endforeach
+<br><br>
+
 
     </div>
 
+    <button type="submit" value="submit">Submit</button>
   </div>
 </div>
 <script>
+
+var y=1;
+$(document).ready(function(){
+var parent= $(".section2");
+var parent1= $(".fieldsContainer");
+var divs=parent.children();
+var divs1=parent1.children();
+while(divs.length){
+  var x=Math.floor(Math.random()*divs.length);
+  parent.append(divs.splice(x,1)[0]);
+ 
+    
+}
+});
+
+$('.card1').each(function(){
+  $("#card"+y).html(y);
+  y=y+1;
+
+
+});
+
 $(".card1").click(function() {
+  var c=$(this).attr('class')
     $('html,body').animate({
         scrollTop: $("#{{$user->qid}}").offset().top-10000
     }, 2000);
@@ -173,8 +202,10 @@ $(".card-text > input[type=radio]").click(function(){
   var myClass=$(this).attr("class");
   $('input[type=radio]').each(function(){
     $('#card'+myClass).css('background-color', '#ABEBC6');
+    });
+
   });
-});
+ 
 </script>
 </body>
 </html>
