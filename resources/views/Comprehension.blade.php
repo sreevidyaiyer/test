@@ -42,7 +42,7 @@
 
 :target {
   border: 2px solid #D4D4D4;
-  background-color: #e5eecc;
+  background-color: #D5D8DC ;
 }
 
 .section2{
@@ -52,6 +52,30 @@
 .card1{
   padding: 10px;
   background: #ddd;
+}
+
+.qs{
+  background-color:#141414;
+  color:#ffffff;
+}
+.qs:hover{
+  background-color:#141414;
+  color:#FCF3CF;
+}
+
+@media (max-width: 900px) {
+    .fieldsContainer{
+      display: grid;
+      grid-template-columns: 1fr;
+    grid-auto-rows: 50px;
+  overflow-y:scroll;/*added*/
+
+    }
+    .content{
+  display: grid;
+  grid-template-columns:0.25fr 1fr;
+  overflow-y:auto;
+}
 }
   </style>
 </head>
@@ -78,6 +102,8 @@
     </ul>
   </div>
 </nav>
+
+<form name="myForm" method="post" formaction="comprehension">  
 <div class="wrapper">
   <div class="content">
       <div class="fieldsContainer">
@@ -87,14 +113,15 @@
       </div>
     <div class="section2">
     @foreach ($users3 as $user3)
-    <div class="card">
+    <div class="card" id="{{$user3->qid}}"
+    >
     @if($user3->para)
   <div class="card-header" style="display:inline-block;">
   <p class="card-text" style="float:left;"><b>{{ $user3->qid }}</b>&nbsp;&nbsp;
             {{ $user3->para }}<br><br>
   </div>
   @endif
-  <div class="card-header" style="display:inline-block;" id="{{$user3->qid}}">
+  <div class="card-header" style="display:inline-block;" >
   <p class="card-text" style="float:left;"><b>{{ $user3->qid }}</b>&nbsp;&nbsp;
   @if($user3->question)
             {{ $user3->question }}
@@ -104,7 +131,7 @@
   <div class="card-body">
 
     <p class="card-text" > 
-    <input type="radio" name="radio{{$user3->qid}}" class="{{$user3->qid}}" value="option1">   @if($user3->option1img)
+    <input type="radio" name="{{$user3->qid}}" class="{{$user3->qid}}" value="1">   @if($user3->option1img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option1img))}}">
       @endif
       @if($user3->option1)
@@ -112,7 +139,7 @@
       @endif</input>
    </p>
       <p class="card-text"> 
-      <input type="radio" name="radio{{$user3->qid}}" class="{{$user3->qid}}" value="option2">
+      <input type="radio" name="{{$user3->qid}}" class="{{$user3->qid}}" value="2">
      @if($user3->option2img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option2img))}}">
       @endif
@@ -121,7 +148,7 @@
       @endif</p>
 
       <p class="card-text">
-      <input type="radio"  name="radio{{$user3->qid}}" class="{{$user3->qid}}" value="option3"> 
+      <input type="radio"  name="{{$user3->qid}}" class="{{$user3->qid}}" value="3"> 
      @if($user3->option3img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option3img))}}">
       @endif
@@ -130,7 +157,7 @@
       @endif</p>
 
       <p class="card-text"> 
-      <input type="radio" name="radio{{$user3->qid}}" class="{{$user3->qid}}" value="option4">
+      <input type="radio" name="{{$user3->qid}}" class="{{$user3->qid}}" value="4">
      @if($user3->option4img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user3->option4img))}}">
       @endif
@@ -144,6 +171,32 @@
 
     </div>
 
+    <button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
+    </div>
+
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to submit Comprehension Section ?</p>
+        <small style="color:red;">*Note: No changes would be permitted after submission</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn qs" data-dismiss="modal">Close</button>
+        <button type="submit"  class="btn qs" value="submit">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</form>
   </div>
 </div>
 <script>

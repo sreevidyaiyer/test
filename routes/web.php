@@ -17,6 +17,12 @@ Route::get('/', function () {
 
 Route::post('/qualitative','QualitativeController@store');
 Route::get('/qualitative','QuestionsController@qualitative');
+
 Route::get('/comprehension','QuestionsController@comprehension');
+Route::post('/comprehension','ComprehensionController@store');
+
+Route::post('/analytical','AnalyticalController@store');
 Route::get('/analytical','QuestionsController@analytical');
+
+Route::post('/creativity','CreativityController@store');
 Route::get('/creativity','QuestionsController@creativity');

@@ -7,6 +7,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="{{asset('js')}}/event.js"></script>
+  <script src="{{asset('css')}}/style.css"></script>
   <style>
  html,body,
 .wrapper{
@@ -41,7 +44,7 @@
 
 :target {
   border: 2px solid #D4D4D4;
-  background-color: #e5eecc;
+  background-color: #D5D8DC;
 }
 
 .section2{
@@ -52,6 +55,33 @@
   padding: 10px;
   background: #ddd;
 }
+
+.qs{
+  background-color:#141414;
+  color:#ffffff;
+}
+.qs:hover{
+  background-color:#141414;
+  color:#FCF3CF;
+}
+
+
+@media (max-width: 900px) {
+    .fieldsContainer{
+      display: grid;
+      grid-template-columns: 1fr;
+    grid-auto-rows: 50px;
+  overflow-y:scroll;/*added*/
+
+    }
+    .content{
+  display: grid;
+  grid-template-columns:0.25fr 1fr;
+  overflow-y:auto;
+}
+}
+
+
   </style>
 </head>
 <body>
@@ -77,7 +107,8 @@
     </ul>
   </div>
 </nav>
-  
+
+<form name="myForm" method="post" >  
 <div class="wrapper">
   <div class="content">
       <div class="fieldsContainer">
@@ -89,9 +120,9 @@
 
     <div class="section2">
     @foreach ($users1 as $user1)
-    <div class="card">
-  <div class="card-header" style="display:inline-block;" id="{{$user1->qid}}">
-  <p class="card-text" style="float:left;"><b>{{ $user1->qid }}</b>&nbsp;&nbsp;
+    <div class="card" id="{{$user1->qid}}">
+  <div class="card-header" style="display:inline-block;" >
+  <p class="card-text" style="float:left;"><b></b>&nbsp;&nbsp;
   @if($user1->question)
             {{ $user1->question }}<br><br>
       @endif
@@ -103,7 +134,7 @@
   <div class="card-body">
 
     <p class="card-text" > 
-    <input type="radio" name="radio{{$user1->qid}}" class="{{$user1->qid}}" value="option1">   @if($user1->option1img)
+    <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="1">   @if($user1->option1img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option1img))}}">
       @endif
       @if($user1->option1)
@@ -111,7 +142,7 @@
       @endif</input>
    </p>
       <p class="card-text"> 
-      <input type="radio" name="radio{{$user1->qid}}" class="{{$user1->qid}}" value="option2">
+      <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="2">
      @if($user1->option2img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option2img))}}">
       @endif
@@ -120,7 +151,7 @@
       @endif</p>
 
       <p class="card-text">
-      <input type="radio" name="radio{{$user1->qid}}" class="{{$user1->qid}}" value="option3"> 
+      <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="3"> 
      @if($user1->option3img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option3img))}}">
       @endif
@@ -129,7 +160,7 @@
       @endif</p>
 
       <p class="card-text"> 
-      <input type="radio" name="radio{{$user1->qid}}" class="{{$user1->qid}}" value="option4">
+      <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="4">
      @if($user1->option4img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option4img))}}">
       @endif
@@ -140,7 +171,7 @@
       
      @if($user1->option5img)
      <p class="card-text"> 
-      <input type="radio" name="radio{{$user1->qid}}" class="{{$user1->qid}}" value="option5">
+      <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="5">
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user1->option5img))}}"></p>
       @endif
       @if($user1->option5)
@@ -154,21 +185,90 @@
 @endforeach
 
     </div>
+  
+<!--    <p id="al"></p>-->
+
+<button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
+    </div>
+
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to submit Creative Section ?</p>
+        <small style="color:red;">*Note: No changes would be permitted after submission</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn qs" data-dismiss="modal">Close</button>
+        <button type="submit"  class="btn qs" value="submit">Submit</button>
+      </div>
+    </div>
 
   </div>
 </div>
+</form>
 <script>
-$(".card1").click(function() {
+
+var y=1;
+$(document).ready(function(){
+var parent= $(".section2");
+var parent1= $(".fieldsContainer");
+var divs=parent.children();
+var divs1=parent1.children();
+var a=divs.length;
+var arr=[];
+var i=0;
+while(a){
+  i++;
+  var x=Math.floor(Math.random()*a);
+  parent.append(divs.splice(x,1)[0]);
+  arr[i]=$(".section2 .card:last").attr('id');
+  $(".section2 .card:last").attr('id',i);
+
+  if(localStorage.getItem("a"+i)!==null)
+   {$("#al").append(" "+a);
+     var q=localStorage.getItem("a"+i);
+    $('input:radio[name='+i+']').filter('[value='+a+']').click();
+    //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
+   }
+  a=a-1;
+ }
+ $(".card1").click(function() {
+  var c=$(this).attr('class')
+
     $('html,body').animate({
         scrollTop: $("#{{$user1->qid}}").offset().top-10000
     }, 2000);
 });
-$(".card-text > input[type=radio]").click(function(){
-  var myClass=$(this).attr("class");
-  $('input[type=radio]').each(function(){
-    $('#card'+myClass).css('background-color', '#ABEBC6');
-  });
 });
-</script>
+
+$('.card1').each(function(){
+  $("#card"+y).html(y);
+  y=y+1;
+
+
+});
+$(".card-text > input[type=radio]").click(function(){
+  var myClass=$(this).parent().parent().parent().attr("id");
+  var radio=$(this).attr('class');
+  localStorage.setItem("a"+radio,$(this).val());
+  $("#al").append("a"+radio,$(this).val());
+    $('input[type=radio]').each(function(){
+    $('#card'+myClass).css('background-color', '#ABEBC6');
+    });
+
+  });
+  window.onload=function(){
+    localStorage.clear();
+  }
+
+  </script>
 </body>
 </html>

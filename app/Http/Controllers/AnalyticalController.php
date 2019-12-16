@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 use App\Qualitative;
 use Illuminate\Support\Facades\Input;
 
-class QualitativeController extends Controller
+class AnalyticalController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index()
+    {
+        //
     }
 
     /**
@@ -34,26 +36,23 @@ class QualitativeController extends Controller
      */
     public function store(Request $request)
     {
-       //return $request->all();
-       $rating = Qualitative::firstOrNew(['id' =>'1']);
-      $data=input::all('value');
-      //$count=1;
-      $name=array_keys($data);
-      $count=count($name);
-     // return $name;
-     for($d=1;$d<=$count;$d=$d+1)
-     // foreach($name as $n)
-      {
-            $rating->id= 1;
-            $f="SEC1_ANS".$name[$d-1];
-            $rating->$f = $data[$d];
-            echo $f." ";
-            echo $data[$d];    
-       }
-      //  $count=$count+1;
-       $rating->save();
+        $rating = Qualitative::firstOrNew(['id' =>'1']);
+        $data=input::all('value');
+        //$count=1;
+        $name=array_keys($data);
+        $count=count($name);
+       // return $name;
+       for($d=1;$d<=$count;$d=$d+1)
+       // foreach($name as $n)
+        {
+              $rating->id= 2;
+              $f="ANA_ANS".$name[$d-1];
+              $rating->$f = $data[$d];
+              echo $f." ";
+              echo $data[$d];    
+         }
+         $rating->save();
     }
-
 
     /**
      * Display the specified resource.

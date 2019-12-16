@@ -55,6 +55,15 @@
   background-color: #D5D8DC ;
 }
 
+.qs{
+  background-color:#141414;
+  color:#ffffff;
+}
+.qs:hover{
+  background-color:#141414;
+  color:#FCF3CF;
+}
+
 @media (max-width: 900px) {
     .fieldsContainer{
       display: grid;
@@ -104,10 +113,10 @@
       <a href="#{{$user->qid}}"><div class="card1" id="card{{$user->qid}}"></div></a> 
       @endforeach
       </div>
+
     <div class="section2">
     @foreach ($users as $user)
     <div class="card" id="{{$user->qid}}">
-   
   <div class="card-header" style="display:inline-block;" >
   <p class="card-text" style="float:left;" ><b></b>&nbsp;&nbsp;
   @if($user->question)
@@ -121,14 +130,14 @@
   <div class="card-body">
 
     <p class="card-text" > 
-    <input type="radio" name="{{$user->qid}}" class="{{$user->qid}}" value="1">   @if($user->option1img)
+    <input type="radio" name="{{$user->qid}}" class="{{$user->qid}}" value="1" required>   @if($user->option1img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option1img))}}">
       @endif
       @if($user->option1)
       {{$user->option1}}
       @endif</input>
    </p>
-      <p class="card-text"> 
+      <p class="card-text" > 
       <input type="radio" name="{{$user->qid}}" value="2" class="{{$user->qid}}">
      @if($user->option2img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option2img))}}">
@@ -157,19 +166,43 @@
    
   </div>
 </div>
-</form>
+
 
 @endforeach
-<br><br>
+
 
 
     </div>
 
-    <button type="submit" value="submit">Submit</button>
-    <p id="al"></p>
-  </div>
+
+<!--    <p id="al"></p>-->
+
+<button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
+    </div>
 
 </div>
+<!-- Modal -->
+<div id="myModal" class="modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to submit Qualitative Section ?</p>
+        <small style="color:red;">*Note: No changes would be permitted after submission</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn qs" data-dismiss="modal">Close</button>
+        <button type="submit"  class="btn qs" value="submit">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</form>
 <script>
 
 var y=1;
@@ -178,19 +211,23 @@ var parent= $(".section2");
 var parent1= $(".fieldsContainer");
 var divs=parent.children();
 var divs1=parent1.children();
-var a=divs.length-2;
+var a=divs.length;
 var arr=[];
 var i=0;
 while(a){
-  a=a-1;
+  i++;
   var x=Math.floor(Math.random()*a);
   parent.append(divs.splice(x,1)[0]);
   arr[i]=$(".section2 .card:last").attr('id');
-  $(".section2 .card:last").attr('id',i+1);
-  i++;
- }
+  $(".section2 .card:last").attr('id',i);
 
-$("#al").html(arr);
+  if(localStorage.getItem("q"+i)!==null)
+   {var q=localStorage.getItem("q"+i);
+    $('input:radio[name='+i+']').filter('[value='+q+']').click();
+    //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
+   }
+  a=a-1;
+ }
  $(".card1").click(function() {
   var c=$(this).attr('class')
 
@@ -206,16 +243,20 @@ $('.card1').each(function(){
 
 
 });
-
-
 $(".card-text > input[type=radio]").click(function(){
   var myClass=$(this).parent().parent().parent().attr("id");
-  $('input[type=radio]').each(function(){
+  var radio=$(this).attr('class');
+  localStorage.setItem("q"+radio,$(this).val());
+  //$("#al").append("q"+radio+" "+$(this).val()+" "+myClass);
+    $('input[type=radio]').each(function(){
     $('#card'+myClass).css('background-color', '#ABEBC6');
     });
 
   });
- 
+  window.onload=function(){
+    localStorage.clear();
+  }
+
 </script>
 </body>
 </html>
