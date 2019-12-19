@@ -24,5 +24,13 @@ Route::post('/comprehension','ComprehensionController@store');
 Route::post('/analytical','AnalyticalController@store');
 Route::get('/analytical','QuestionsController@analytical');
 
-Route::post('/creativity','CreativityController@store');
-Route::get('/creativity','QuestionsController@creativity');
+Route::post('creativity','CreativityController@store');
+Route::get('creativity','QuestionsController@creativity');
+
+Route::get('/final', function () {
+    return view('final');
+})->name('final');
+
+Route::post('/final', function () {
+    return view('final');
+})->name('final');

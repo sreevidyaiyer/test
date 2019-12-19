@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Qualitative;
 use Illuminate\Support\Facades\Input;
-use Redirect;
-use View;
 
-class QualitativeController extends Controller
+class FinalController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index()
+    {
+        //
     }
 
     /**
@@ -36,37 +36,28 @@ class QualitativeController extends Controller
      */
     public function store(Request $request)
     {
-       //return $request->all();
-       $rating = Qualitative::firstOrNew(['id' =>'1']);
-      $data=input::all('value');
-      //$count=1;
-      $name=array_keys($data);
-      $count=count($name);
-     // return $name;
-     for($d=1;$d<=$count;$d=$d+1)
-     // foreach($name as $n)
-      {
-            $rating->id= 1;
-            $f="SEC1_ANS".$name[$d-1];
-            $rating->$f = $data[$d];
-            echo $f." ";
-            echo $data[$d];    
-       }
-      //  $count=$count+1;
-       $rating->save();
-      // $section='Qualitative';
-      //   return redirect()->route('final')->with('section',$section);
-
-      $data = array(
-        'title'=>'My App',
-        'Description'=>'This is New Application',
-        'author'=>'foo'
-        );
-     //   return View::make("/final", compact('data')); 
-     
-        return View::make('final')->with($data);
+        //
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        $request->session()->put('section',$request->input('qualitative'));
+        echo $request->session()->get('section');
+        return view('final')->with('section',$request->session()->get('section'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         //

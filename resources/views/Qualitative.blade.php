@@ -83,17 +83,17 @@
   
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
+    <li class="nav-item active">
         <a class="nav-link" href="#">Qualitative Analysis <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item ">
         <a class="nav-link" href="/comprehension">Comprehension</a>
       </li>
       <li class="nav-item">
@@ -102,7 +102,19 @@
       <li class="nav-item">
         <a class="nav-link" href="/analytical">Analytical Test</a>
       </li>
-    </ul>
+      </ul>
+      <div class="navbar-collapse ">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <button type="button" class="btn btn-success nav-link" id="timer">60:00</button>
+            </li>
+            &nbsp;&nbsp;
+            <li class="nav-item">
+            <button type="button" class="btn btn-success nav-link">Submit Test</button>
+            </li>
+           
+        </ul>
+      </div>  
   </div>
 </nav>
 <form name="myForm" method="post" action = "qualitative" >
@@ -110,14 +122,15 @@
   <div class="content">
       <div class="fieldsContainer">
       @foreach($users as $user)
-      <a href="#{{$user->qid}}"><div class="card1" id="card{{$user->qid}}"></div></a> 
+      <a href="#{{$user->qid}}"><div style="padding: 10px;
+  background: #ddd;" id="card{{$user->qid}}" name="card1"></div></a> 
       @endforeach
       </div>
 
     <div class="section2">
     @foreach ($users as $user)
-    <div class="card" id="{{$user->qid}}">
-  <div class="card-header" style="display:inline-block;" >
+  <div class="card" id="{{$user->qid}}">
+  <div class="card-header" style="display:inline-block;">
   <p class="card-text" style="float:left;" ><b></b>&nbsp;&nbsp;
   @if($user->question)
             {{ $user->question }}
@@ -163,7 +176,7 @@
       @if($user->option4)
       {{$user->option4}}
       @endif</p>
-   
+
   </div>
 </div>
 
@@ -175,9 +188,10 @@
     </div>
 
 
-<!--    <p id="al"></p>-->
+
 
 <button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
+<p id="al"></p>
     </div>
 
 </div>
@@ -196,13 +210,37 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn qs" data-dismiss="modal">Close</button>
-        <button type="submit"  class="btn qs" value="submit">Submit</button>
+        <button type="submit"  class="btn qs" value="submit" action="{{URL::to('final')}}">Submit</button>
       </div>
     </div>
 
   </div>
 </div>
 </form>
+<input type="hidden" value="Qualitative" name="qualitative">
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+    function incTimer() {
+        var currentMinutes = Math.floor(totalSecs / 60);
+        var currentSeconds = totalSecs % 60;
+        if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
+        if(currentMinutes <= 9) currentMinutes = "0" + currentMinutes;
+        totalSecs--;
+        localStorage.setItem("time",totalSecs);
+        $("#timer").text(currentMinutes + ":" + currentSeconds);
+        setTimeout('incTimer()', 1000);
+    }
+
+    if(localStorage.getItem("time"))
+    {totalSecs = localStorage.getItem("time");}
+    else
+    totalSecs=3600;
+
+    $(document).ready(function() {
+      
+            incTimer();
+    });
+</script>
 <script>
 
 var y=1;
@@ -212,51 +250,56 @@ var parent1= $(".fieldsContainer");
 var divs=parent.children();
 var divs1=parent1.children();
 var a=divs.length;
+var c=a;
 var arr=[];
 var i=0;
+
 while(a){
   i++;
   var x=Math.floor(Math.random()*a);
   parent.append(divs.splice(x,1)[0]);
-  arr[i]=$(".section2 .card:last").attr('id');
   $(".section2 .card:last").attr('id',i);
-
+ $(".section2 .card:last").attr('id');
+  a=a-1;
+ }
+ var i=0;
+ while(c){
+  i++;
   if(localStorage.getItem("q"+i)!==null)
    {var q=localStorage.getItem("q"+i);
     $('input:radio[name='+i+']').filter('[value='+q+']').click();
-    //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
+    var cl=$('input:radio[name='+i+']').parent().parent().parent().attr("id");
+      $('#card'+cl).css('background-color', '#ABEBC6');
+  
+  
+    //$('.'+cl).css('background-color', '#ABEBC6');
+     //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
    }
-  a=a-1;
+   c=c-1;
  }
- $(".card1").click(function() {
-  var c=$(this).attr('class')
 
+ $("div[name='card1']").click(function() {
     $('html,body').animate({
         scrollTop: $("#{{$user->qid}}").offset().top-10000
     }, 2000);
-});
-});
-
-$('.card1').each(function(){
-  $("#card"+y).html(y);
-  y=y+1;
-
-
 });
 $(".card-text > input[type=radio]").click(function(){
   var myClass=$(this).parent().parent().parent().attr("id");
   var radio=$(this).attr('class');
   localStorage.setItem("q"+radio,$(this).val());
-  //$("#al").append("q"+radio+" "+$(this).val()+" "+myClass);
-    $('input[type=radio]').each(function(){
-    $('#card'+myClass).css('background-color', '#ABEBC6');
-    });
-
+  $('#card'+myClass).css('background-color', '#ABEBC6');
+  
   });
-  window.onload=function(){
-    localStorage.clear();
-  }
+});
 
+$("div[name='card1']").each(function(){
+  $("#card"+y).html(y);
+  y=y+1;
+});
+
+/*window.onload=function(){
+  localStorage.clear();
+}*/
 </script>
 </body>
 </html>

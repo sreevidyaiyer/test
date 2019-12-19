@@ -84,7 +84,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Start Test</a>
+  <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -93,16 +93,28 @@
     <li class="nav-item ">
         <a class="nav-link" href="/qualitative">Qualitative Analysis <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item ">
         <a class="nav-link" href="/comprehension">Comprehension</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item ">
         <a class="nav-link" href="/creativity">Creativity test</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="#">Analytical Test</a>
       </li>
-    </ul>
+      </ul>
+      <div class="navbar-collapse ">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <button type="button" class="btn btn-success nav-link" id="timer">60:00</button>
+            </li>
+            &nbsp;&nbsp;
+            <li class="nav-item">
+            <button type="button" class="btn btn-success nav-link">Submit Test</button>
+            </li>
+           
+        </ul>
+      </div>  
   </div>
 </nav>
 <form name="myForm" method="post" action = "analytical">
@@ -199,6 +211,26 @@
 </form>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+    function incTimer() {
+        var currentMinutes = Math.floor(totalSecs / 60);
+        var currentSeconds = totalSecs % 60;
+        if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
+        if(currentMinutes <= 9) currentMinutes = "0" + currentMinutes;
+        totalSecs--;
+        localStorage.setItem("time",totalSecs);
+        $("#timer").text(currentMinutes + ":" + currentSeconds);
+        setTimeout('incTimer()', 1000);
+    }
+    if(localStorage.getItem("time"))
+    {totalSecs = localStorage.getItem("time");}
+    else
+    totalSecs=3600;
+    $(document).ready(function() {
+            incTimer();
+    });
+</script>
 <script>
 
 var y=1;
@@ -217,9 +249,9 @@ while(a){
   arr[i]=$(".section2 .card:last").attr('id');
   $(".section2 .card:last").attr('id',i);
 
-  if(localStorage.getItem("q"+i)!==null)
-   {var q=localStorage.getItem("q"+i);
-    $('input:radio[name='+i+']').filter('[value='+q+']').click();
+  if(localStorage.getItem("an"+i)!==null)
+   {var q=localStorage.getItem("an"+i);
+    $('input:radio[name='+i+']').filter('[value='+an+']').click();
     //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
    }
   a=a-1;
@@ -242,8 +274,8 @@ $('.card1').each(function(){
 $(".card-text > input[type=radio]").click(function(){
   var myClass=$(this).parent().parent().parent().attr("id");
   var radio=$(this).attr('class');
-  localStorage.setItem("q"+radio,$(this).val());
-  $("#al").append("q"+radio,$(this).val());
+  localStorage.setItem("an"+radio,$(this).val());
+  $("#al").append("an"+radio,$(this).val());
     $('input[type=radio]').each(function(){
     $('#card'+myClass).css('background-color', '#ABEBC6');
     });

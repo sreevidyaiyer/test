@@ -52,6 +52,8 @@ class AnalyticalController extends Controller
               echo $data[$d];    
          }
          $rating->save();
+         
+       return redirect('/final');
     }
 
     /**

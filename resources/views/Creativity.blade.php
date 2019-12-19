@@ -80,9 +80,7 @@
   overflow-y:auto;
 }
 }
-
-
-  </style>
+</style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -104,10 +102,21 @@
       <li class="nav-item">
         <a class="nav-link" href="/analytical">Analytical Test</a>
       </li>
-    </ul>
+      </ul>
+      <div class="navbar-collapse ">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <button type="button" class="btn btn-success nav-link" id="timer">60:00</button>
+            </li>
+            &nbsp;&nbsp;
+            <li class="nav-item">
+            <button type="button" class="btn btn-success nav-link">Submit Test</button>
+            </li>
+           
+        </ul>
+      </div>  
   </div>
 </nav>
-
 <form name="myForm" method="post" >  
 <div class="wrapper">
   <div class="content">
@@ -186,9 +195,10 @@
 
     </div>
   
-<!--    <p id="al"></p>-->
 
 <button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
+<p id="al"></p>
+
     </div>
 
 </div>
@@ -214,6 +224,27 @@
   </div>
 </div>
 </form>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+    function incTimer() {
+        var currentMinutes = Math.floor(totalSecs / 60);
+        var currentSeconds = totalSecs % 60;
+        if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
+        if(currentMinutes <= 9) currentMinutes = "0" + currentMinutes;
+        totalSecs--;
+        localStorage.setItem("time",totalSecs);
+        $("#timer").text(currentMinutes + ":" + currentSeconds);
+        setTimeout('incTimer()', 1000);
+    }
+
+    if(localStorage.getItem("time"))
+    {totalSecs = localStorage.getItem("time");}
+    else
+    totalSecs=3600;
+    $(document).ready(function() {
+            incTimer();
+    });
+</script>
 <script>
 
 var y=1;
@@ -223,6 +254,7 @@ var parent1= $(".fieldsContainer");
 var divs=parent.children();
 var divs1=parent1.children();
 var a=divs.length;
+$("#al").html("children-> "+a);
 var arr=[];
 var i=0;
 while(a){
@@ -232,10 +264,11 @@ while(a){
   arr[i]=$(".section2 .card:last").attr('id');
   $(".section2 .card:last").attr('id',i);
 
-  if(localStorage.getItem("a"+i)!==null)
+  if(localStorage.getItem("cr"+i)!==null)
    {$("#al").append(" "+a);
-     var q=localStorage.getItem("a"+i);
-    $('input:radio[name='+i+']').filter('[value='+a+']').click();
+     var cr=localStorage.getItem("cr"+i);
+    $('input:radio[name='+i+']').filter('[value='+cr+']').click();
+    
     //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
    }
   a=a-1;
@@ -258,17 +291,16 @@ $('.card1').each(function(){
 $(".card-text > input[type=radio]").click(function(){
   var myClass=$(this).parent().parent().parent().attr("id");
   var radio=$(this).attr('class');
-  localStorage.setItem("a"+radio,$(this).val());
-  $("#al").append("a"+radio,$(this).val());
+  localStorage.setItem("cr"+radio,$(this).val());
+  $("#al").append("cr"+radio+" "+$(this).val()+" "+myClass);
     $('input[type=radio]').each(function(){
     $('#card'+myClass).css('background-color', '#ABEBC6');
     });
 
   });
-  window.onload=function(){
-    localStorage.clear();
-  }
-
-  </script>
+/*window.onload=function(){
+  localStorage.clear();
+}*/
+</script>
 </body>
 </html>

@@ -54,6 +54,8 @@ class ComprehensionController extends Controller
         }
        //  $count=$count+1;
         $rating->save();
+        
+       return redirect('/final');
     }
 
     /**
