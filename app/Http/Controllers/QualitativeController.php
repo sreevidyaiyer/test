@@ -39,6 +39,7 @@ class QualitativeController extends Controller
        //return $request->all();
        $rating = Qualitative::firstOrNew(['id' =>'1']);
       $data=input::all('value');
+     // return ($data);
       //$count=1;
       $name=array_keys($data);
       $count=count($name);
@@ -48,23 +49,23 @@ class QualitativeController extends Controller
       {
             $rating->id= 1;
             $f="SEC1_ANS".$name[$d-1];
-            $rating->$f = $data[$d];
-            echo $f." ";
-            echo $data[$d];    
+            $rating->$f = $data[$name[$d-1]];
+            echo " <br> ".$f." ";
+            echo $data[$name[$d-1]];    
        }
       //  $count=$count+1;
        $rating->save();
       // $section='Qualitative';
       //   return redirect()->route('final')->with('section',$section);
 
-      $data = array(
+    /*  $data = array(
         'title'=>'My App',
         'Description'=>'This is New Application',
         'author'=>'foo'
         );
      //   return View::make("/final", compact('data')); 
      
-        return View::make('final')->with($data);
+        return View::make('final')->with($data);*/
     }
 
     public function edit($id)

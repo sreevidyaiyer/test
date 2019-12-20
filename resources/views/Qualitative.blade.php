@@ -130,7 +130,7 @@
     <div class="section2">
     @foreach ($users as $user)
   <div class="card" id="{{$user->qid}}">
-  <div class="card-header" style="display:inline-block;">
+  <div class="card-header" style="display:inline-block;">{{$user->qid}}
   <p class="card-text" style="float:left;" ><b></b>&nbsp;&nbsp;
   @if($user->question)
             {{ $user->question }}
@@ -143,7 +143,7 @@
   <div class="card-body">
 
     <p class="card-text" > 
-    <input type="radio" name="{{$user->qid}}" class="{{$user->qid}}" value="1" required>   @if($user->option1img)
+    <input type="radio" name="{{$user->qid}}" class="{{$user->qid}}" value="1" >   @if($user->option1img)
      <img src="data:image/png;base64,{{chunk_split(base64_encode($user->option1img))}}">
       @endif
       @if($user->option1)

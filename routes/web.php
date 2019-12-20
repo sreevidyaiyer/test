@@ -27,10 +27,8 @@ Route::get('/analytical','QuestionsController@analytical');
 Route::post('creativity','CreativityController@store');
 Route::get('creativity','QuestionsController@creativity');
 
-Route::get('/final', function () {
-    return view('final');
-})->name('final');
+Route::post('final','ResultController@qsubmitted');
+Route::get('final','ResultController@qsubmitted');
 
-Route::post('/final', function () {
-    return view('final');
-})->name('final');
+Route::post('final','ResultController@qcorrect');
+Route::get('final','ResultController@qcorrect');

@@ -117,7 +117,54 @@
       </div>  
   </div>
 </nav>
-{{$title}}
+
+<br>
+
+
+<?php $x = array();
+$i=0; ?>
+@foreach($qans as $qan)
+             @if ($qan->correct != 0)
+                 <?php $x[$i] = $qan->correct;
+                 $i=$i+1;
+                 ?>                  
+             @endif
+@endforeach
+<?php
+echo implode(" ",$x);
+?>
+
+<?php $y = array();
+$j=1; ?>
+@foreach($qans1 as $qan1)
+<?php 
+for($j=1;$j<=20;$j=$j+1)
+{$a="SEC1_ans".$j;
+echo $a;
+$y[$j]=$qan1->$a;
+}?> 
+@endforeach
+<?php
+echo implode("<br> ",$y);
+?>
+
+
+<?php
+$count = 0;
+for($k=1;$k<=8;$k=$k+1)
+{
+if ($x[$k] == $y[$k]) {
+$count=$count+1;
+}
+}
+echo $count;
+?>
+
+
+<br>
+
+
+
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
     function incTimer() {
