@@ -122,7 +122,7 @@
   <div class="content">
       <div class="fieldsContainer">
       @foreach($users2 as $user2)
-      <a href="#{{$user2->qid}}"><div class="card1" id="card{{$user2->qid}}"></div></a>
+      <a href="#{{$user2->qid}}"><div name="card1" class="card1" id="card{{$user2->qid}}"></div></a>
       @endforeach
       </div>
     <div class="section2">
@@ -240,47 +240,50 @@ var parent1= $(".fieldsContainer");
 var divs=parent.children();
 var divs1=parent1.children();
 var a=divs.length;
+var c=a;
 var arr=[];
 var i=0;
 while(a){
   i++;
   var x=Math.floor(Math.random()*a);
   parent.append(divs.splice(x,1)[0]);
-  arr[i]=$(".section2 .card:last").attr('id');
-  $(".section2 .card:last").attr('id',i);
-
-  if(localStorage.getItem("an"+i)!==null)
-   {var q=localStorage.getItem("an"+i);
-    $('input:radio[name='+i+']').filter('[value='+an+']').click();
-    //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
-   }
+  arr[i]=$(".section2 .card:last").attr('id',i);
+ $(".section2 .card:last").attr('id');
   a=a-1;
  }
- $(".card1").click(function() {
-  var c=$(this).attr('class')
-
+ var i=0;
+ while(c){
+  i++;
+  if(localStorage.getItem("an"+i)!==null)
+   {var an=localStorage.getItem("an"+i);
+    $('input:radio[name='+i+']').filter('[value='+an+']').click();
+    var cl=$('input:radio[name='+i+']').parent().parent().parent().attr("id");
+      $('#card'+cl).css('background-color', '#ABEBC6');
+  
+  
+    //$('.'+cl).css('background-color', '#ABEBC6');
+     //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
+   }
+   c=c-1;
+ } $("div[name='card1']").click(function() {
     $('html,body').animate({
         scrollTop: $("#{{$user2->qid}}").offset().top-10000
     }, 2000);
-});
-});
-
-$('.card1').each(function(){
-  $("#card"+y).html(y);
-  y=y+1;
-
-
 });
 $(".card-text > input[type=radio]").click(function(){
   var myClass=$(this).parent().parent().parent().attr("id");
   var radio=$(this).attr('class');
   localStorage.setItem("an"+radio,$(this).val());
-  $("#al").append("an"+radio,$(this).val());
-    $('input[type=radio]').each(function(){
-    $('#card'+myClass).css('background-color', '#ABEBC6');
-    });
-
+  $('#card'+myClass).css('background-color', '#ABEBC6');
+  
   });
+});
+
+$("div[name='card1']").each(function(){
+  $("#card"+y).html(y);
+  y=y+1;
+});
+
 
 </script>
 </body>

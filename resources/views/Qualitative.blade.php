@@ -217,7 +217,6 @@
   </div>
 </div>
 </form>
-<input type="hidden" value="Qualitative" name="qualitative">
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
     function incTimer() {
@@ -258,7 +257,7 @@ while(a){
   i++;
   var x=Math.floor(Math.random()*a);
   parent.append(divs.splice(x,1)[0]);
-  $(".section2 .card:last").attr('id',i);
+  arr[i]=$(".section2 .card:last").attr('id',i);
  $(".section2 .card:last").attr('id');
   a=a-1;
  }

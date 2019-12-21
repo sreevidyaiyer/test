@@ -122,7 +122,7 @@
   <div class="content">
       <div class="fieldsContainer">
       @foreach($users1 as $user1)
-      <a href="#{{$user1->qid}}"><div class="card1" id="card{{$user1->qid}}">{{$user1->qid}}</div></a>
+      <a href="#{{$user1->qid}}"><div name="card1" class="card1" id="card{{$user1->qid}}">{{$user1->qid}}</div></a>
       @endforeach
       </div>
 
@@ -241,7 +241,9 @@
     {totalSecs = localStorage.getItem("time");}
     else
     totalSecs=3600;
+
     $(document).ready(function() {
+      
             incTimer();
     });
 </script>
@@ -254,50 +256,53 @@ var parent1= $(".fieldsContainer");
 var divs=parent.children();
 var divs1=parent1.children();
 var a=divs.length;
-$("#al").html("children-> "+a);
+var c=a;
 var arr=[];
 var i=0;
+
 while(a){
   i++;
   var x=Math.floor(Math.random()*a);
   parent.append(divs.splice(x,1)[0]);
-  arr[i]=$(".section2 .card:last").attr('id');
-  $(".section2 .card:last").attr('id',i);
-
-  if(localStorage.getItem("cr"+i)!==null)
-   {$("#al").append(" "+a);
-     var cr=localStorage.getItem("cr"+i);
-    $('input:radio[name='+i+']').filter('[value='+cr+']').click();
-    
-    //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
-   }
+  arr[i]=$(".section2 .card:last").attr('id',i);
+ $(".section2 .card:last").attr('id');
   a=a-1;
  }
- $(".card1").click(function() {
-  var c=$(this).attr('class')
+ var i=0;
+ while(c){
+  i++;
+  if(localStorage.getItem("cc"+i)!==null)
+   {var cc=localStorage.getItem("cc"+i);
+    $('input:radio[name='+i+']').filter('[value='+cc+']').click();
+    var cl=$('input:radio[name='+i+']').parent().parent().parent().attr("id");
+      $('#card'+cl).css('background-color', '#ABEBC6');
+  
+  
+    //$('.'+cl).css('background-color', '#ABEBC6');
+     //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
+   }
+   c=c-1;
+ }
 
+ $("div[name='card1']").click(function() {
     $('html,body').animate({
         scrollTop: $("#{{$user1->qid}}").offset().top-10000
     }, 2000);
 });
-});
-
-$('.card1').each(function(){
-  $("#card"+y).html(y);
-  y=y+1;
-
-
-});
 $(".card-text > input[type=radio]").click(function(){
   var myClass=$(this).parent().parent().parent().attr("id");
   var radio=$(this).attr('class');
-  localStorage.setItem("cr"+radio,$(this).val());
-  $("#al").append("cr"+radio+" "+$(this).val()+" "+myClass);
-    $('input[type=radio]').each(function(){
-    $('#card'+myClass).css('background-color', '#ABEBC6');
-    });
-
+  localStorage.setItem("cc"+radio,$(this).val());
+  $('#card'+myClass).css('background-color', '#ABEBC6');
+  
   });
+});
+
+$("div[name='card1']").each(function(){
+  $("#card"+y).html(y);
+  y=y+1;
+});
+
 /*window.onload=function(){
   localStorage.clear();
 }*/

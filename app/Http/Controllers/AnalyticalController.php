@@ -45,15 +45,13 @@ class AnalyticalController extends Controller
        for($d=1;$d<=$count;$d=$d+1)
        // foreach($name as $n)
         {
-              $rating->id= 2;
+              $rating->id= 1;
               $f="ANA_ANS".$name[$d-1];
-              $rating->$f = $data[$d];
-              echo $f." ";
-              echo $data[$d];    
+              $rating->$f = $data[$name[$d-1]];
+              echo " <br> ".$f." ";
+              echo $data[$name[$d-1]];    
          }
          $rating->save();
-         
-       return redirect('/final');
     }
 
     /**

@@ -236,17 +236,44 @@
     });
 </script>
 <script>
-$(".card1").click(function() {
+$(document).ready(function(){
+var parent= $(".section2");
+var divs=parent.children();
+var a=divs.length;
+var i=0;
+ while(a){
+  i++;
+  if(localStorage.getItem("comp"+i)!==null)
+   {var comp=localStorage.getItem("comp"+i);
+    $('input:radio[name='+i+']').filter('[value='+comp+']').click();
+    var cl=$('input:radio[name='+i+']').parent().parent().parent().attr("id");
+      $('#card'+cl).css('background-color', '#ABEBC6');
+  
+  
+    //$('.'+cl).css('background-color', '#ABEBC6');
+     //$("input[value=\""+localStorage.getItem('q'+i)+"\"]").click();
+   }
+   a=a-1;
+ }
+
+ $("div[name='card1']").click(function() {
     $('html,body').animate({
         scrollTop: $("#{{$user3->qid}}").offset().top-10000
     }, 2000);
 });
 $(".card-text > input[type=radio]").click(function(){
   var myClass=$(this).attr("class");
+  localStorage.setItem("comp"+myClass,$(this).val());
   $('input[type=radio]').each(function(){
     $('#card'+myClass).css('background-color', '#ABEBC6');
   });
 });
+});
+
+
+/*window.onload=function(){
+  localStorage.clear();
+}*/
 </script>
 </body>
 </html>

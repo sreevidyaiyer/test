@@ -11,74 +11,16 @@
   <script src="{{asset('js')}}/event.js"></script>
   <script src="{{asset('css')}}/style.css"></script>
   <style>
- html,body,
-.wrapper{
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
+ .card {
+   margin-left:10%;
+   margin-right:10%;
+ }
 
-.wrapper{
-    display: grid;
-  grid-template-rows: 520px;
-  overflow:auto;
-  margin-top:30px;
-}
-
-.content{
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  grid-gap: 10px;
-  overflow-y:auto;
-}
-
-.fieldsContainer{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(70px,1fr));
-  grid-auto-rows: 50px;
-  grid-gap: 10px;
-  overflow-y:scroll;/*added*/
-}
-
-.section2{
-    overflow-y:scroll;
-}
-
-.card1{
-  padding: 10px;
-  background: #ddd;
-}
-:target {
-  border: 2px solid #D4D4D4;
-  background-color: #D5D8DC ;
-}
-
-.qs{
-  background-color:#141414;
-  color:#ffffff;
-}
-.qs:hover{
-  background-color:#141414;
-  color:#FCF3CF;
-}
-
-@media (max-width: 900px) {
-    .fieldsContainer{
-      display: grid;
-      grid-template-columns: 1fr;
-    grid-auto-rows: 50px;
-  overflow-y:scroll;/*added*/
-
-    }
-    .content{
-  display: grid;
-  grid-template-columns:0.25fr 1fr;
-  overflow-y:auto;
-}
-}
-
+ .card-header{
+  background-color:#343a40;
+  color:white;
+  font-size:20px;
+ }
 </style>
   
 </head>
@@ -131,7 +73,7 @@ $i=0; ?>
              @endif
 @endforeach
 <?php
-echo implode(" ",$x);
+// echo implode(" ",$x);
 ?>
 
 <?php $y = array();
@@ -140,12 +82,12 @@ $j=1; ?>
 <?php 
 for($j=1;$j<=20;$j=$j+1)
 {$a="SEC1_ans".$j;
-echo $a;
+//echo $a;
 $y[$j]=$qan1->$a;
 }?> 
 @endforeach
 <?php
-echo implode("<br> ",$y);
+//echo implode("<br> ",$y);
 ?>
 
 
@@ -157,13 +99,48 @@ if ($x[$k] == $y[$k]) {
 $count=$count+1;
 }
 }
-echo $count;
+//echo $count;
 ?>
-
-
 <br>
-
-
+<div class="card text-center">
+  <div class="card-header">
+     <b>Result</b>
+  </div>
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Section</th>
+      <th scope="col">Marks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Qualitative Analysis</td>
+      <td><?php echo $count; ?></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Comprehension</td>
+      <td>Thornton</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>Creativity Test</td>
+      <td>the Bird</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Analytical test</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+  <div class="card-footer text-muted">
+   <p style="float:right;"> Total Score : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+  </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>

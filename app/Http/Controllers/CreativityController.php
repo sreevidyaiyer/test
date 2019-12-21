@@ -46,18 +46,17 @@ class CreativityController extends Controller
       // return $name;
       for($d=1;$d<=$count;$d=$d+1)
       // foreach($name as $n)
-       {
-             $rating->id= 1;
-             $f="CRE_ANS".$name[$d-1];
-             echo $f." ";
-             echo $data[$d];
-             $rating->$f = $data[$d];
+       { $rating->id= 1;
+        $f="CRE_ANS".$name[$d-1];
+        $rating->$f = $data[$name[$d-1]];
+        echo " <br> ".$f." ";
+        echo $data[$name[$d-1]];   
                  
         }
        //  $count=$count+1;
         $rating->save();
         
-       return redirect('/final');
+      
      }
 
     /**
