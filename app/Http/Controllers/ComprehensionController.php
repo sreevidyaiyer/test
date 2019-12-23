@@ -49,12 +49,13 @@ class ComprehensionController extends Controller
              $rating->id= 1;
              $f="COMP_ANS".$name[$d-1];
              $rating->$f = $data[$name[$d-1]];
-             echo $f." ";
-             echo $data[$name[$d-1]];    
+             //echo $f." ";
+             //echo $data[$name[$d-1]];    
         }
        //  $count=$count+1;
         $rating->save();
-        
+        $section='Comprehension';
+        return view('viewfinal',['section'=>$section]);
     }
 
     /**

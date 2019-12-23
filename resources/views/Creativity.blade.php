@@ -22,7 +22,7 @@
 
 .wrapper{
     display: grid;
-  grid-template-rows: 520px;
+  grid-template-rows: 620px;
   overflow:auto;
   margin-top:30px;
 }
@@ -148,7 +148,7 @@
       @endif
       @if($user1->option1)
       {{$user1->option1}}
-      @endif</input>
+      @endif
    </p>
       <p class="card-text"> 
       <input type="radio" name="{{$user1->qid}}" class="{{$user1->qid}}" value="2">
@@ -227,6 +227,7 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
     function incTimer() {
+      if(totalSecs>=0){
         var currentMinutes = Math.floor(totalSecs / 60);
         var currentSeconds = totalSecs % 60;
         if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
@@ -235,7 +236,12 @@
         localStorage.setItem("time",totalSecs);
         $("#timer").text(currentMinutes + ":" + currentSeconds);
         setTimeout('incTimer()', 1000);
-    }
+      }
+      else
+      {
+        window.location='{{ route('csubmit') }}';
+      }
+        }
 
     if(localStorage.getItem("time"))
     {totalSecs = localStorage.getItem("time");}
@@ -303,9 +309,9 @@ $("div[name='card1']").each(function(){
   y=y+1;
 });
 
-/*window.onload=function(){
+window.onload=function(){
   localStorage.clear();
-}*/
+}
 </script>
 </body>
 </html>

@@ -19,7 +19,7 @@
 
 .wrapper{
     display: grid;
-  grid-template-rows: 520px;
+  grid-template-rows: 620px;
   overflow:auto;
   margin-top:30px;
 }
@@ -184,7 +184,6 @@
     </div>
 
     <button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
-    <p id="time">Hello</p></div>
 
 </div>
 <!-- Modal -->
@@ -217,6 +216,7 @@
       if(localStorage.getItem("time1")!==null){
         $("#time").append(" "+localStorage.getItem("time1"));
       }
+         if(totalSecs>=0){
         var currentMinutes = Math.floor(totalSecs / 60);
         var currentSeconds = totalSecs % 60;
         if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
@@ -225,6 +225,11 @@
         localStorage.setItem("time",totalSecs);
         $("#timer").text(currentMinutes + ":" + currentSeconds);
         setTimeout('incTimer()', 1000);
+      }
+      else
+      {
+        window.location='{{ route('osubmit') }}';
+      }
     }
 
     if(localStorage.getItem("time"))
@@ -271,9 +276,9 @@ $(".card-text > input[type=radio]").click(function(){
 });
 
 
-/*window.onload=function(){
+window.onload=function(){
   localStorage.clear();
-}*/
+}
 </script>
 </body>
 </html>

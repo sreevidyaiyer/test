@@ -49,12 +49,14 @@ class CreativityController extends Controller
        { $rating->id= 1;
         $f="CRE_ANS".$name[$d-1];
         $rating->$f = $data[$name[$d-1]];
-        echo " <br> ".$f." ";
-        echo $data[$name[$d-1]];   
+        //echo " <br> ".$f." ";
+        //echo $data[$name[$d-1]];   
                  
         }
        //  $count=$count+1;
         $rating->save();
+        $section='Creativity';
+        return view('viewfinal',['section'=>$section]);
         
       
      }

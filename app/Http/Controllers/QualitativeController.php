@@ -50,13 +50,14 @@ class QualitativeController extends Controller
             $rating->id= 1;
             $f="SEC1_ANS".$name[$d-1];
             $rating->$f = $data[$name[$d-1]];
-            echo " <br> ".$f." ";
-            echo $data[$name[$d-1]];    
+           // echo " <br> ".$f." ";
+            //echo $data[$name[$d-1]];    
        }
       //  $count=$count+1;
-       $rating->save();
-      // $section='Qualitative';
-      //   return redirect()->route('final')->with('section',$section);
+        $rating->save();
+        $section='Qualitative';
+        return view('viewfinal',['section'=>$section]);
+      
 
     /*  $data = array(
         'title'=>'My App',
@@ -70,7 +71,7 @@ class QualitativeController extends Controller
 
     public function edit($id)
     {
-        //
+     
     }
 
     /**

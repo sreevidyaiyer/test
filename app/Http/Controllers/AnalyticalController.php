@@ -48,10 +48,12 @@ class AnalyticalController extends Controller
               $rating->id= 1;
               $f="ANA_ANS".$name[$d-1];
               $rating->$f = $data[$name[$d-1]];
-              echo " <br> ".$f." ";
-              echo $data[$name[$d-1]];    
+              //echo " <br> ".$f." ";
+              //echo $data[$name[$d-1]];    
          }
          $rating->save();
+         $section='Analytical';
+        return view('viewfinal',['section'=>$section]);
     }
 
     /**

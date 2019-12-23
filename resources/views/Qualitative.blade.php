@@ -22,7 +22,7 @@
 
 .wrapper{
     display: grid;
-  grid-template-rows: 520px;
+  grid-template-rows: 620px;
   overflow:auto;
   margin-top:30px;
 }
@@ -110,7 +110,7 @@
             </li>
             &nbsp;&nbsp;
             <li class="nav-item">
-            <button type="button" class="btn btn-success nav-link">Submit Test</button>
+            <button type="button" class="btn btn-success nav-link" onclick="window.location='{{ url('final') }}'" >Submit Test</button>
             </li>
            
         </ul>
@@ -148,7 +148,7 @@
       @endif
       @if($user->option1)
       {{$user->option1}}
-      @endif</input>
+      @endif
    </p>
       <p class="card-text" > 
       <input type="radio" name="{{$user->qid}}" value="2" class="{{$user->qid}}">
@@ -190,8 +190,7 @@
 
 
 
-<button type="button" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
-<p id="al"></p>
+<button type="button" id="SubmitButtonFinal" class="btn qs" data-toggle="modal" data-target="#myModal">Submit Section</button>
     </div>
 
 </div>
@@ -206,11 +205,10 @@
       </div>
       <div class="modal-body">
         <p>Are you sure you want to submit Qualitative Section ?</p>
-        <small style="color:red;">*Note: No changes would be permitted after submission</small>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn qs" data-dismiss="modal">Close</button>
-        <button type="submit"  class="btn qs" value="submit" action="{{URL::to('final')}}">Submit</button>
+        <button type="submit"  class="btn qs" value="submit">Submit</button>
       </div>
     </div>
 
@@ -220,6 +218,7 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
     function incTimer() {
+      if(totalSecs>=0){
         var currentMinutes = Math.floor(totalSecs / 60);
         var currentSeconds = totalSecs % 60;
         if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
@@ -228,12 +227,17 @@
         localStorage.setItem("time",totalSecs);
         $("#timer").text(currentMinutes + ":" + currentSeconds);
         setTimeout('incTimer()', 1000);
-    }
+      }
+      else
+      {
+        window.location='{{ route('qsubmit') }}';
+      }
+        }
 
     if(localStorage.getItem("time"))
     {totalSecs = localStorage.getItem("time");}
     else
-    totalSecs=3600;
+    totalSecs=60;
 
     $(document).ready(function() {
       
@@ -295,10 +299,9 @@ $("div[name='card1']").each(function(){
   $("#card"+y).html(y);
   y=y+1;
 });
-
-/*window.onload=function(){
+window.onload=function(){
   localStorage.clear();
-}*/
+}
 </script>
 </body>
 </html>

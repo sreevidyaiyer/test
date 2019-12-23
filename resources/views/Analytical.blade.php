@@ -22,7 +22,7 @@
 
 .wrapper{
     display: grid;
-  grid-template-rows: 520px;
+  grid-template-rows: 620px;
   overflow:auto;
   margin-top:30px;
 }
@@ -214,6 +214,7 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
     function incTimer() {
+      if(totalSecs>=0){
         var currentMinutes = Math.floor(totalSecs / 60);
         var currentSeconds = totalSecs % 60;
         if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
@@ -222,7 +223,12 @@
         localStorage.setItem("time",totalSecs);
         $("#timer").text(currentMinutes + ":" + currentSeconds);
         setTimeout('incTimer()', 1000);
-    }
+      }
+      else
+      {
+        window.location='{{ route('asubmit') }}';
+      }
+        }
     if(localStorage.getItem("time"))
     {totalSecs = localStorage.getItem("time");}
     else
@@ -284,6 +290,9 @@ $("div[name='card1']").each(function(){
   y=y+1;
 });
 
+window.onload=function(){
+  localStorage.clear();
+}
 
 </script>
 </body>
