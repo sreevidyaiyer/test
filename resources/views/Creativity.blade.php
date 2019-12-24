@@ -224,6 +224,22 @@
   </div>
 </div>
 </form>
+<div id="AutoSubmit" class="modal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="alert alert-dark" role="alert">
+      <p>The timer has run out!Kindly submit your test now!</p>
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit"  class="btn qs" value="submit" onclick="window.location='{{ url('final') }}'" >Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
     function incTimer() {
@@ -237,12 +253,14 @@
         $("#timer").text(currentMinutes + ":" + currentSeconds);
         setTimeout('incTimer()', 1000);
       }
-      else
+       else
       {
-        window.location='{{ route('csubmit') }}';
+        //window.location='{{ route('qsubmit') }}';
+      $("#AutoSubmit").css('display','block');
+      $(".navbar").fadeTo(500,0.1);
+       $(".FormSubmit").fadeTo(500,0.1);
       }
         }
-
     if(localStorage.getItem("time"))
     {totalSecs = localStorage.getItem("time");}
     else
@@ -252,6 +270,7 @@
       
             incTimer();
     });
+    
 </script>
 <script>
 
@@ -309,9 +328,6 @@ $("div[name='card1']").each(function(){
   y=y+1;
 });
 
-window.onload=function(){
-  localStorage.clear();
-}
 </script>
 </body>
 </html>

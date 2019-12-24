@@ -37,11 +37,11 @@ for($j=1;$j<=20;$j=$j+1)
 {$a="SEC1_ans".$j;
 //echo $a;
 $y[$j]=$qan1->$a;
-echo ($y[$j]);
+//echo ($y[$j]);
 }?> 
 @endforeach
 <?php
-echo implode(" ",$y);
+//echo implode(" ",$y);
 ?>
 
 

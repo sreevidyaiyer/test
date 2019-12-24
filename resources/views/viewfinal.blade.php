@@ -75,6 +75,9 @@
 <div class="alert alert-success" role="alert" style="width=60%;">
   {{$section}} section has been submitted.
 </div></h3>
+<div class="alert alert-danger" role="alert">
+  Make sure you submit all the sections !
+</div>
   </div>
 </div>
 
